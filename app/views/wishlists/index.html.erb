@@ -1,0 +1,30 @@
+<h2>Listing the wishlist</h2>
+
+<% if @wishlists.empty? %>
+<p> your wishlist is empty <%= link_to "shop here", products_path %>
+<% else %>
+
+
+ <table border="1">
+ <thead>
+<tr>
+<th>product name</th>
+<th>product price</th>
+<th>quantity</th>
+<th>total</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+
+<% @wishlists.each do |wishlist| %>
+<tr>
+<td><%= wishlist.product.name %></td>
+<td><%= wishlist.quantity %></td>
+<td><%= wishlist.product.price %></td>
+</tr>
+<% end %>
+<% end %>
+
+</tbody>
+</table>

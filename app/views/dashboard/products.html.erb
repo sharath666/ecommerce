@@ -1,0 +1,10 @@
+<h2> dashboard products </h2>
+<%= render 'nav' %>
+
+<% data_product = {} %>
+<% @products.each do |product| %>
+<% data_product[product.name] = product.reviews.length %>
+<% end %>
+
+<%=pie_chart(data_product) %>
+

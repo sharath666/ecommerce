@@ -1,0 +1,27 @@
+<h1>Dashboard#orders</h1>
+<%= render 'nav' %>
+<% user_data = {}  %>
+
+
+<% @users.each do |user| %>
+
+<% if user.is_admin? %>
+<h2> admin </h2>
+<% else %>
+<% user_data[user.username] = user.orders.length%>
+<% end %>
+<% end %>
+<%= column_chart(user_data)%>
+
+<h2> renevue data </h2>
+
+<% u_data = {} %>
+<% @users.each do |user| %>
+
+<% if user.is_admin? %>
+<h2> admin </h2>
+<% else %>
+<% u_data[user.username] = user.orders.pluck(:total).sum(:total) %>
+<% end %>
+<% end %>
+<%= column_chart(u_data)%>

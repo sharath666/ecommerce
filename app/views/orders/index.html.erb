@@ -1,0 +1,28 @@
+<h2> orders(<%=@orders.length%>) </h2>
+<table border ="1">
+<thead>
+<tr>
+<th> # </th>
+<th> Date </th>
+<th> Total </th>
+</tr>
+</thead>
+<tbody>
+
+<% @orders.each do |order| %>
+<tr>
+<td><%= order.order_number %></td>
+<td><%= order.order_date %></td>
+<td><%= order.total %></td>
+</tr>
+	
+</tbody>
+</table>
+
+<% order.order_line_items.each do |line_item| %>
+<ul>
+
+<li><%=line_item.product.name %> INR <%= line_item.price %> quantity <%= line_item.quantity %> total <%= line_item.price * line_item.quantity %>
+</ul>
+<% end %>
+<% end %>

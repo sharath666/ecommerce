@@ -1,0 +1,48 @@
+<h2>Listing the CartLineItems</h2>
+
+<% if @cart_line_items.empty? %>
+<p> cart is empty <%= link_to "shop here", products_path %>
+<% else %>
+
+ <% sum=0 %>
+ <table border="1">
+ <thead>
+<tr>
+<th>product name</th>
+<th>product price</th>
+<th>quantity</th>
+<th>total</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+
+
+ <% @cart_line_items.each do |t| %>
+<tr>
+<td><%= t.product.name %></td>
+<td>  <%= t.product.price %></td>
+<td>  <%= form_for t do |g| %>
+<%= g.select :quantity, (1..10).to_a %>
+<%= g.submit "update" %>
+<% end %></td>
+<td><%= t.product.price * t.quantity %>    </td>
+<td> <%= link_to "remove", cart_line_item_path(t.id), method: :delete, data: {confirm: "Are you sure?"} %> </td>
+</tr>
+ <% sum =sum +t.product.price * t.quantity %>
+<% end %>
+
+</tbody>
+</table>
+<%= form_for @order do |f| %>
+
+<label>address</label><br /><br />
+<%= f.collection_select :address_id, Address.all, :id, :street, prompt: "Select Category" %><br /><br />
+
+<%= f.submit "checkout" %>
+<% end %>
+
+
+
+<h3> Cart Total </h3><%= sum %>
+<% end %>

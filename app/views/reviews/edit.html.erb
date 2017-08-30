@@ -1,0 +1,13 @@
+<h2>edit review
+</h2>
+<%= form_for @review do |t| %>
+<label> add review </label>
+<%= t.text_field :body %><br />
+<label> rating </label>
+
+<%= t.select :rating, (1..5).to_a %>  <br />
+
+<%= t.submit %>
+<% end %>
+<h3> Reviews </h3>
+<ol>
