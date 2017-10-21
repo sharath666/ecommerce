@@ -1,20 +1,61 @@
+<h2>Listing categories </h2>
+<button >click here</button>
+<p id="demo"></p>
+<% @categories.each do |category| %>
+<input type="checkbox" id="<%=category.id %>" onclick ="myfunction(<%=category.id %>)"> 
+<%= category.name %></input>
+<% end %>
+
+<script>
+function myfunction(category){
+	 console.log(category.products)
+}
+
+</script>
 <h2>Listing Products </h2>
 <% if @products.empty? %>
 	<p>No Products Found </p>
 <% else %>
-	<ul>
+	<ol id="List">
+
 	<% @products.each do |product| %>
 	<li><%= link_to product.name, product_path(product.id) %> - INR <%= product.price %>
 	<%= link_to product.category.name, category_path(product.category_id) %>
 	<%= link_to "show", product_path(product.id) %>
 	</li>
 	<% end %>
-	</ul>
+	</ol>
 	<% end %>
 
 		<% if user_signed_in?  %>
 	<%= link_to "Add Product", new_product_path %>
 	<% end %>
 	<!--<a href = "/products/new"> Add Product</a> -->
+	<script>
+	var offset = 50;
+	$(document).ready(function(){
+		$(window).on('scroll', function(){
+			if($(window).scrollTop() > $(document).height()- $(window).height()-100){
+				console.log("ghhjk");
+				var output = "";
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '/products.json?offset=' + offset, false);
+				xhr.onreadystatechange = function(){
+					if(xhr.readyState=== 4 && xhr.status ===200){
+					var products = JSON.parse(xhr.responseText);
+				products.forEach(function(product){
+					output += 	`<li>${product.name}</li>`
+				offset++;	
+				});
+				
+				$('#List').append(output);
+
+				}
+			}
+			xhr.send();
+		}
+		});
+	});
+	</script>
 
 

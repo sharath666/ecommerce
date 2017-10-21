@@ -1,0 +1,100 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Vendors(<%= @vendors.length %>)</h1>
+
+<div id="vendorTable">
+<%= render 'table'%>
+</div>
+<br>
+<h2>Add Vendor </h2>
+<span id="errors"></span>
+<%= render 'form' %>
+
+<script>
+ var validator = {
+	"name":false,
+	"email":false,
+	"mobile":false
+		
+}
+function resetErrorMsg(errorField){
+  errorField.innerHTML = "";
+}
+var mobileFormatter = /^[0-9]+$/;
+var emailFormatter = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+var mobileErrorHandle = document.getElementById('mobileError');
+var emailErrorHandle = document.getElementById('emailError');
+var nameErrorHandle = document.getElementById('nameError');
+var nameHandle = document.getElementById('vendor_name');
+var emailHandle = document.getElementById('vendor_email');
+var mobileHandle = document.getElementById('vendor_mobile');
+var submitHandle = document.getElementById('submit');
+
+	function nameCheck(){
+	 if (nameHandle.value ==""){
+	
+    nameErrorHandle.innerHTML = "can't be blank";
+    //return validator.name = false;
+  }
+  else if (nameHandle.value.length< 3){
+    nameErrorHandle.innerHTML = "Should contain minimum 6 characters";
+    //return validator.name = false;
+  } else{
+    resetErrorMsg(nameHandle)
+     return validator.name = true;
+  }
+}
+function email(){
+	
+  if(emailHandle.value ==""){
+    emailErrorHandle.innerHTML = "Can't be blank";
+    //return validator.email = false;
+  }
+  else if(!emailFormatter.test(emailHandle.value)){
+    emailErrorHandle.innerHTML = "should a valid format";
+    //return validator.email = false;
+}
+else{
+      resetErrorMsg(emailHandle);
+      return validator.email = true;
+      
+    }
+}
+function mobile(){
+
+
+  if(mobileHandle.value == ""){
+    mobileErrorHandle.innerHTML = "can't be blank";
+    //return validator.mobile = false;
+  }else if (mobileHandle.value.length !=10){
+    mobileErrorHandle.innerHTML = "should be 10 digits"
+    //return validator.mobile = false;
+}else{
+		console.log(1);
+  resetErrorMsg(mobileHandle);
+return validator.mobile = true;
+}
+}
+
+
+
+submitHandle.addEventListener('click', function(e){
+	nameCheck();
+		email();
+		mobile();
+
+
+if (validator.name == true && validator.email == true && validator.mobile == true)
+{
+	
+		return true;
+	}
+	else{
+	e.preventDefault();
+}
+}, false);
+</script>
+		
+
+
+		

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @subcategory.name %>
+</p>
+
+<p>
+  <strong>Listing products</strong>
+  <ol>
+  <% @subcategory.products.each do |product| %>
+ <li><%= link_to product.name, product_path(product.id) %></li>
+ <ul>
+ <%# @subcategory.products.each do |product| %>
+ <% product.reviews.each do |review| %>
+ <li><%= review.body %></li>
+ <% end %>
+ <%# end %>
+ </ul>
+ <% end %>
+
+ </ol>
+ <strong> 
+
+
+</p>
+
+<%= link_to 'Edit', edit_subcategory_path(@subcategory) %> |
+<%= link_to 'Back', subcategories_path %>

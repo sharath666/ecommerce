@@ -39,27 +39,24 @@
 
 
 
-<% if user_signed_in? && current_user.is_admin %>
-<%= form_for @review do |t| %>
-<label> add review </label>
-<%= t.text_field :body %><br />
-<label> rating </label>
-<%= t.select :rating, (1..5).to_a %>  <br />
-<%= t.hidden_field :product_id, value: @product.id %>
-<%= t.submit "add review" %>
-<% end %>
-<% end %>
-<h3> Reviews </h3>
-<ol>
+<%# if user_signed_in? && current_user.is_admin %>
+<%# end %>
 
-<% @product.reviews.each do |t| %>
-<li>reviews: <%= t.body %>
-ratings:<%= t.rating %><br /><br /></li>
-<% if user_signed_in?  && current_user.is_admin%>
+<h2>Listing reviews</h2>
+<ul id = 'reviewList' %>
+<% @product.reviews.each do |rev| %>
+<li><%= rev.body %>
+<% if rev.user_id == current_user.id %>
+<%= link_to "destroy", review_path(rev.id), method: :delete, data: {confirm: "Are you sure?", remote:true}  %>
+<!--
+destroy option is used to to delete the previous record 
+!-->
+<% end %>
+</li>
+<% end %>
+</ul>
+<div id="errorMsg" ></div>
+<%= render '/reviews/form' %>
 
 
-<%= link_to "edit", edit_review_path(t.id) %>
-<%= link_to "delete", review_path(t.id), method: :delete, data: {confirm:"are you sure?"} %>
-<% end %>
-<% end %>
-</ol>
+

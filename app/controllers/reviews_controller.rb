@@ -1,17 +1,22 @@
 class ReviewsController < ApplicationController
 	def index
-		@review = Reviews.all
+		@reviews = Reviews.all
+		@product_reviews = Review.where('product_id=?', @review.product_id)
 	end
 	
 	def create
 		@review = Review.new(params[:review].permit(:product_id,:user_id,:body, :rating))
 		@review.user_id = current_user.id
+		respond_to do |format|
 		if @review.save
-			redirect_to products_path, notice: "successfully added review"
+			format.html { redirect_to :back, notice: 'review was successfully created.' }
+			format.js
+			
 		else
-			render action: "new"
+			format.js
 		
 		end
+	end
 	end	
 	def edit
 		@review = Review.find(params[:id])

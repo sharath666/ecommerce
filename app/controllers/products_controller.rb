@@ -45,16 +45,27 @@ destroy
 
 =end
 before_action :authenticate_user!, except: [:index, :show]
-before_action :check_is_admin, except: [:index, :show]
-def index 
-	@products = Product.all
+#before_action :check_is_admin, except: [:index, :show]
+def index
+	@categories = Category.all
+@products = Product.all
+	if params[:offset]
+		@products = Product.offset(params[:offset]).limit(50)
+	else
+		@products = Product.limit(50)
+	end
+	respond_to do |format| 
+		format.html
+		format.json { render json: @products}
+	end
+
 end
 def new 
 	@product = Product.new
 end
 
 def create
-	@product = Product.new(params[:product].permit(:name, :description, :price, :category_id, :code, :cod_eligible, :stock) )
+	@product = Product.new(params[:product].permit(:name, :description, :price, :category_id, :code, :cod_eligible, :stock, :subcategory_id) )
 	if @product.save
 		redirect_to products_path, notice: "Successfully created product"
 	else

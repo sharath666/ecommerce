@@ -13,7 +13,8 @@
        <% if user_signed_in? %>
   <%= current_user.username %>
   <%= link_to "Account Settings", edit_user_registration_path %> | 
-  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+  <%= link_to "Logout", destroy_user_session_path, method: :delete %>|
+  <%= link_to "subcategory", subcategories_path%>|
      <%= link_to "categories", categories_path %> |<%= link_to "products", products_path %> 
  | <%= link_to "cart", cart_line_items_path %> <%=link_to "address", new_address_path %>
    <% else %>

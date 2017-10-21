@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
 
 	@order.user_id = current_user.id
  		@order.save
- 		Notification.order_confirmation(@order).deliver!
+ 		#Notification.order_confirmation(@order).deliver!
  		redirect_to orders_path, notice: "successfully order placed"
  end
 
